@@ -152,4 +152,26 @@ final class JobController extends AbstractController
 
         return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/search', name: 'app_job_search', methods: ['GET'])]
+    public function search(Request $request, JobRepository $jobRepository, EntityManagerInterface $entityManager): Response
+    {
+        $query = $request->query->get('q', '');
+        
+        // Get search results
+        $jobs = [];
+        if (!empty($query)) {
+            $jobs = $jobRepository->searchByQuery($query);
+        }
+        
+        // Get all unique countries for the filter
+        $countriesQuery = $entityManager->createQuery('SELECT DISTINCT j.country FROM App\Entity\Job j ORDER BY j.country ASC');
+        $countries = array_column($countriesQuery->getArrayResult(), 'country');
+        
+        return $this->render('job/search.html.twig', [
+            'jobs' => $jobs,
+            'query' => $query,
+            'countries' => $countries,
+        ]);
+    }
 }

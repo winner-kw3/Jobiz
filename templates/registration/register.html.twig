@@ -1,24 +1,108 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription - Jobiz
+{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+	<div
+		class="font-[system-ui]">
+		<!-- Banner Section -->
+		<section class="relative h-48 bg-slate-700">
+			<div class="absolute inset-0 overflow-hidden">
+				<div class="w-full h-full bg-slate-800 bg-opacity-70"></div>
+			</div>
+			<div class="relative container mx-auto px-4 h-full flex items-center justify-center">
+				<h1 class="text-3xl md:text-4xl font-bold text-white text-center">Créer votre compte</h1>
+			</div>
+		</section>
 
-    <h1>Register</h1>
+		<!-- Registration Form Section -->
+		<section class="py-16 bg-gray-50">
+			<div class="container mx-auto px-4">
+				<div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
+					{% for flash_error in app.flashes('verify_email_error') %}
+						<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6" role="alert">
+							<p class="font-medium">{{ flash_error }}</p>
+						</div>
+					{% endfor %}
 
-    {{ form_errors(registrationForm) }}
+					{% if form_errors(registrationForm) %}
+						<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6" role="alert">
+							{{ form_errors(registrationForm) }}
+						</div>
+					{% endif %}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+					{{ form_start(registrationForm, {'attr': {'class': 'space-y-6'}}) }}
+					<div>
+						{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'block text-sm font-medium text-slate-700 mb-1'}}) }}
+						{{ form_widget(registrationForm.email, {'attr': {'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent'}}) }}
+						{% if form_errors(registrationForm.email) %}
+							<div class="text-red-500 text-sm mt-1">
+								{{ form_errors(registrationForm.email) }}
+							</div>
+						{% endif %}
+						<p class="text-xs text-gray-500 mt-1">{{ form_help(registrationForm.email) }}</p>
+					</div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+					<div>
+						{{ form_label(registrationForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'block text-sm font-medium text-slate-700 mb-1'}}) }}
+						{{ form_widget(registrationForm.username, {'attr': {'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent'}}) }}
+						{% if form_errors(registrationForm.username) %}
+                            <div class="text-red-500 text-sm mt-1">
+                                {{ form_errors(registrationForm.username) }}
+                            </div>
+                        {% endif %}
+					</div>
+
+					<div>
+						{{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'block text-sm font-medium text-slate-700 mb-1'}}) }}
+						{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent'}}) }}
+						{% if form_errors(registrationForm.plainPassword) %}
+                            <div class="text-red-500 text-sm mt-1">
+                                {{ form_errors(registrationForm.plainPassword) }}
+                            </div>
+                        {% endif %}
+                        <p class="text-xs text-gray-500 mt-1">{{ form_help(registrationForm.plainPassword) }}</p>
+					</div>
+
+					<div class="flex items-center">
+						{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded'}}) }}
+						{{ form_label(registrationForm.agreeTerms, 'J\'accepte les conditions générales', {'label_attr': {'class': 'ml-2 block text-sm text-gray-600'}}) }}
+						{% if form_errors(registrationForm.agreeTerms) %}
+							<div class="text-red-500 text-sm ml-2">
+								{{ form_errors(registrationForm.agreeTerms) }}
+							</div>
+						{% endif %}
+					</div>
+
+					<div>
+						<button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+							S'inscrire
+						</button>
+					</div>
+					{{ form_end(registrationForm) }}
+
+					<div class="mt-6 text-center">
+						<p class="text-sm text-gray-600">
+							Vous avez déjà un compte ?
+							<a href="{{ path('app_login') }}" class="font-medium text-teal-600 hover:text-teal-500">
+								Se connecter
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA Section -->
+		<section class="bg-teal-600 py-12 text-white">
+			<div class="container mx-auto px-4 md:px-8 max-w-6xl text-center">
+				<h2 class="text-3xl font-bold mb-6">Rejoignez la communauté Jobiz</h2>
+				<p class="text-xl mb-8 max-w-2xl mx-auto">Créez votre compte aujourd'hui pour postuler aux offres d'emploi et suivre vos candidatures en un seul endroit.</p>
+				<a href="{{ path('app_job_index') }}" class="bg-white text-teal-600 hover:bg-gray-100 py-3 px-8 rounded-full font-medium inline-block transition">
+					Parcourir les offres
+				</a>
+			</div>
+		</section>
+	</div>
 {% endblock %}

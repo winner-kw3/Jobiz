@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de recherche -
+	{{ query }}
+	- Jobiz
+{% endblock %}
+
+{% block body %}
+	<div
+		class="font-[system-ui]">
+		<!-- Header Banner -->
+		<section class="relative h-40 bg-slate-700">
+			<div class="absolute inset-0 overflow-hidden">
+				<div class="w-full h-full bg-slate-800 bg-opacity-70"></div>
+			</div>
+			<div class="relative container mx-auto px-4 h-full flex items-center justify-center">
+				<h1 class="text-3xl md:text-4xl font-bold text-white text-center">
+					{% if query %}
+						Résultats pour "{{ query }}"
+					{% else %}
+						Recherche d'emploi
+					{% endif %}
+				</h1>
+			</div>
+		</section>
+
+		<!-- Search Results Section -->
+		<section class="py-12">
+			<div class="container mx-auto px-4">
+				<div
+					class="max-w-7xl mx-auto">
+					<!-- Search form -->
+					<div class="mb-8">
+						<form action="{{ path('app_job_search') }}" method="get" class="flex gap-2 max-w-2xl mx-auto">
+							<input type="text" name="q" value="{{ query }}" placeholder="Rechercher des emplois par mot-clé..." class="flex-1 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+							<button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md">
+								Rechercher
+							</button>
+						</form>
+					</div>
+
+					<!-- Results count -->
+					<div class="mb-6">
+						<h2 class="text-2xl font-semibold text-slate-700">{{ jobs|length }}
+							emploi(s) trouvé(s)</h2>
+					</div>
+
+					<!-- Results list -->
+					<div class="space-y-6">
+						{% if jobs is empty %}
+							<div class="bg-white rounded-lg shadow-md p-8 text-center">
+								{% if query %}
+									<p class="text-gray-500 mb-4">Aucun résultat ne correspond à votre recherche "{{ query }}".</p>
+								{% else %}
+									<p class="text-gray-500 mb-4">Veuillez saisir un terme de recherche pour trouver des offres d'emploi.</p>
+								{% endif %}
+								<a href="{{ path('app_job_index') }}" class="text-teal-600 hover:text-teal-800 font-medium">
+									Voir tous les emplois
+								</a>
+							</div>
+						{% else %}
+							{% for job in jobs %}
+								<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition">
+									<div class="p-6">
+										<div class="flex flex-wrap items-center justify-between mb-4">
+											<span class="{{ job.jobType.name == 'Full-time' ? 'bg-teal-100 text-teal-800' : (job.jobType.name == 'Remote' ? 'bg-blue-100 text-blue-800' : (job.jobType.name == 'Contract' ? 'bg-purple-100 text-purple-800' : (job.jobType.name == 'Part-time' ? 'bg-amber-100 text-amber-800' : (job.jobType.name == 'Internship' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800')))) }} text-xs font-medium px-3 py-1 rounded-full">
+												{{ job.jobType.name }}
+											</span>
+											<div class="flex items-center">
+												<span class="text-gray-500 text-sm mr-2">{{ job.city }},
+													{{ job.country }}</span>
+												{% if job.remoteAllowed %}
+													<span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Télétravail</span>
+												{% endif %}
+											</div>
+										</div>
+
+										<h3 class="text-xl font-bold text-slate-700 mb-2">{{ job.title }}</h3>
+
+										<div class="flex items-center mb-4">
+											<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+												<span class="text-gray-500 font-bold">{{ job.company.name|slice(0, 2)|upper }}</span>
+											</div>
+											<span class="text-gray-600">{{ job.company.name }}</span>
+											<span class="text-gray-400 mx-2">•</span>
+											<span class="text-gray-500">{{ job.salaryRange }}</span>
+										</div>
+
+										<p class="text-gray-600 mb-5">{{ job.description|striptags|slice(0, 150) ~ '...' }}</p>
+
+										<div class="flex items-center justify-between">
+											<div class="flex flex-wrap gap-2">
+												{% for category in job.categories %}
+													<span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">{{ category.name }}</span>
+												{% endfor %}
+											</div>
+											<a href="{{ path('app_job_show', {'id': job.id}) }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
+												Voir détails
+												<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
+													<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+												</svg>
+											</a>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA Section -->
+		<section class="bg-teal-600 py-12 text-white">
+			<div class="container mx-auto px-4 md:px-8 max-w-6xl text-center">
+				<h2 class="text-3xl font-bold mb-6">Vous n'avez pas trouvé ce que vous cherchiez ?</h2>
+				<p class="text-xl mb-8 max-w-2xl mx-auto">Parcourez toutes nos offres d'emploi ou créez une alerte pour être notifié des nouvelles opportunités.</p>
+				<div class="flex flex-wrap justify-center gap-4">
+					<a href="{{ path('app_job_index') }}" class="bg-white text-teal-600 hover:bg-gray-100 py-3 px-8 rounded-full font-medium inline-block transition">
+						Toutes les offres
+					</a>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}

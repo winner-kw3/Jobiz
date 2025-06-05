@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Login - Jobiz
+{% block title %}Connexion - Jobiz
 {% endblock %}
 
 {% block body %}
@@ -12,7 +12,7 @@
 				<div class="w-full h-full bg-slate-800 bg-opacity-70"></div>
 			</div>
 			<div class="relative container mx-auto px-4 h-full flex items-center justify-center">
-				<h1 class="text-3xl md:text-4xl font-bold text-white text-center">Login to Your Account</h1>
+				<h1 class="text-3xl md:text-4xl font-bold text-white text-center">Connexion à votre compte</h1>
 			</div>
 		</section>
 
@@ -28,43 +28,43 @@
 
 					{% if app.user %}
 						<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-6">
-							<p>You are logged in as
+							<p>Vous êtes connecté en tant que
 								{{ app.user.userIdentifier }}.
-								<a href="{{ path('app_logout') }}" class="font-medium underline">Logout</a>
+								<a href="{{ path('app_logout') }}" class="font-medium underline">Déconnexion</a>
 							</p>
 						</div>
 					{% endif %}
 
 					<form method="post" class="space-y-6">
 						<div>
-							<label for="username" class="block text-sm font-medium text-slate-700 mb-1">Username</label>
+							<label for="username" class="block text-sm font-medium text-slate-700 mb-1">Nom d'utilisateur</label>
 							<input type="username" value="{{ last_username }}" name="_username" id="username" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" autocomplete="email" required autofocus>
 						</div>
 
 						<div>
-							<label for="password" class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+							<label for="password" class="block text-sm font-medium text-slate-700 mb-1">Mot de passe</label>
 							<input type="password" name="_password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" autocomplete="current-password" required>
 						</div>
 
 						<div class="flex items-center">
 							<input type="checkbox" name="_remember_me" id="_remember_me" class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
-							<label for="_remember_me" class="ml-2 block text-sm text-gray-600">Remember me</label>
+							<label for="_remember_me" class="ml-2 block text-sm text-gray-600">Se souvenir de moi</label>
 						</div>
 
 						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 						<div>
 							<button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-								Sign in
+								Se connecter
 							</button>
 						</div>
 					</form>
 
 					<div class="mt-6 text-center">
 						<p class="text-sm text-gray-600">
-							Don't have an account?
-							<a href="#" class="font-medium text-teal-600 hover:text-teal-500">
-								Sign up
+							Vous n'avez pas de compte ?
+							<a href="{{ path('app_register') }}" class="font-medium text-teal-600 hover:text-teal-500">
+								S'inscrire
 							</a>
 						</p>
 					</div>
@@ -75,10 +75,10 @@
 		<!-- CTA Section -->
 		<section class="bg-teal-600 py-12 text-white">
 			<div class="container mx-auto px-4 md:px-8 max-w-6xl text-center">
-				<h2 class="text-3xl font-bold mb-6">Find Your Dream Tech Job Today</h2>
-				<p class="text-xl mb-8 max-w-2xl mx-auto">Join Jobiz and connect with leading tech companies looking for your expertise.</p>
+				<h2 class="text-3xl font-bold mb-6">Trouvez l'emploi tech de vos rêves dès aujourd'hui</h2>
+				<p class="text-xl mb-8 max-w-2xl mx-auto">Rejoignez Jobiz et connectez-vous avec des entreprises tech de premier plan à la recherche de votre expertise.</p>
 				<a href="{{ path('app_home') }}" class="bg-white text-teal-600 hover:bg-gray-100 py-3 px-8 rounded-full font-medium inline-block transition">
-					Explore Jobs
+					Explorer les offres
 				</a>
 			</div>
 		</section>
