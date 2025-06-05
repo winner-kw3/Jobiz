@@ -1,6 +1,6 @@
 # Jobiz - Plateforme d'Emploi Tech
 
-![Jobiz Logo] ![image](https://github.com/user-attachments/assets/7e09a85b-ad69-4d57-bd62-e3049654836b)
+![image](https://github.com/user-attachments/assets/7e09a85b-ad69-4d57-bd62-e3049654836b)
 
 ## À propos du projet
 
@@ -25,34 +25,35 @@ Jobiz est une plateforme dédiée à la mise en relation des professionnels de l
 
 ### Page d'accueil
 
-![Page d'accueil](![image1](https://github.com/user-attachments/assets/31f12e3b-5cea-4e69-94ec-57da54216df6))
+![image1](https://github.com/user-attachments/assets/31f12e3b-5cea-4e69-94ec-57da54216df6)
 
 ### Liste des offres
 
-![Liste des offres](![image3](https://github.com/user-attachments/assets/6f8c5f2b-a3b7-467a-a02a-9576913a7694))
+![image2](https://github.com/user-attachments/assets/8d35e79c-c85c-4c04-8cc2-0fb959f689a3)
 
 
 ### Détail d'une offre
 
-![Détail d'une offre](public/assets/jobiz/image3.png)
+![image3](https://github.com/user-attachments/assets/6f8c5f2b-a3b7-467a-a02a-9576913a7694)
 
 ### Formulaire de candidature
 
-![Candidature](public/assets/jobiz/image4.png)
+![image4](https://github.com/user-attachments/assets/6ed171f4-ff71-4ed4-8625-5c52f3b71d03)
 
 ### Page d'inscription
 
-![Inscription](public/assets/jobiz/image5.png)
+![image5](https://github.com/user-attachments/assets/332f2c47-7ecc-43c3-9fbe-eb59c52406ea)
 
 ### Recherche d'emploi
 
-![Recherche](public/assets/jobiz/image6.png)
+![image6](https://github.com/user-attachments/assets/add43f88-910d-4164-997d-f7cf90f66508)
 
 ### Interface Admin
 
-![Admin](public/assets/jobiz/image7.png)
+![image7](https://github.com/user-attachments/assets/9da42687-59bf-4b49-9ec2-2daf697081b6)
 
 ## Technologies utilisées
+
 
 - **Framework:** Symfony 6
 - **Base de données:** MySQL / MariaDB
