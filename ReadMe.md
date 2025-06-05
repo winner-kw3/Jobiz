@@ -1,6 +1,6 @@
 # Jobiz - Plateforme d'Emploi Tech
 
-![Jobiz Logo](![image](https://github.com/user-attachments/assets/7e09a85b-ad69-4d57-bd62-e3049654836b))
+![Jobiz Logo] ![image](https://github.com/user-attachments/assets/7e09a85b-ad69-4d57-bd62-e3049654836b)
 
 ## À propos du projet
 
