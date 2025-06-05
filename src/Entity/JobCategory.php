@@ -54,6 +54,12 @@ class JobCategory
         return $this->jobs;
     }
 
+    public function __toString(): string
+    {
+        return $this->name; // ou le champ qui représente le type (ex: 'Temps plein', 'Freelance', etc.)
+    }
+
+
     public function addJob(Job $job): static
     {
         if (!$this->jobs->contains($job)) {
