@@ -1,45 +1,185 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Job index{% endblock %}
+{% block title %}Job Listings - Jobiz
+{% endblock %}
 
 {% block body %}
-    <h1>Job index</h1>
+	<div
+		class="font-[system-ui]">
+		<!-- Header Banner -->
+		<section class="relative h-40 bg-slate-700">
+			<div class="absolute inset-0 overflow-hidden">
+				<div class="w-full h-full bg-slate-800 bg-opacity-70"></div>
+			</div>
+			<div class="relative container mx-auto px-4 h-full flex items-center justify-center">
+				<h1 class="text-3xl md:text-4xl font-bold text-white text-center">Browse IT Job Opportunities</h1>
+			</div>
+		</section>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Country</th>
-                <th>City</th>
-                <th>RemoteAllowed</th>
-                <th>SalaryRange</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for job in jobs %}
-            <tr>
-                <td>{{ job.id }}</td>
-                <td>{{ job.title }}</td>
-                <td>{{ job.description }}</td>
-                <td>{{ job.country }}</td>
-                <td>{{ job.city }}</td>
-                <td>{{ job.remoteAllowed ? 'Yes' : 'No' }}</td>
-                <td>{{ job.salaryRange }}</td>
-                <td>
-                    <a href="{{ path('app_job_show', {'id': job.id}) }}">show</a>
-                    <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		<!-- Jobs Section with Filters -->
+		<section class="py-12">
+			<div class="container mx-auto px-4">
+				<div class="max-w-7xl mx-auto">
+					<div
+						class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+						<!-- Left column (filters) -->
+						<div class="lg:col-span-1">
+							<div class="bg-white rounded-lg shadow-md p-6 sticky top-6">
+								<h2 class="text-xl font-semibold text-slate-700 mb-4">Filters</h2>
 
-    <a href="{{ path('app_job_new') }}">Create new</a>
+								<form
+									action="{{ path('app_job_index') }}" method="get" class="space-y-6">
+									<!-- Category Filter -->
+									<div>
+										<label for="category" class="block text-sm font-medium text-slate-700 mb-1">Job Category</label>
+										<select name="category" id="category" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+											<option value="">All Categories</option>
+											{% for category in categories %}
+												<option value="{{ category.id }}" {% if app.request.query.get('category') == category.id ~ '' %} selected {% endif %}>
+													{{ category.name }}
+												</option>
+											{% endfor %}
+										</select>
+									</div>
+
+									<!-- Country Filter -->
+									<div>
+										<label for="country" class="block text-sm font-medium text-slate-700 mb-1">Country</label>
+										<select name="country" id="country" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+											<option value="">All Countries</option>
+											{% for country in countries %}
+												<option value="{{ country }}" {% if app.request.query.get('country') == country %} selected {% endif %}>
+													{{ country }}
+												</option>
+											{% endfor %}
+										</select>
+									</div>
+
+									<!-- Remote Filter -->
+									<div class="flex items-center">
+										<input type="checkbox" name="remote" id="remote" class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded" {% if app.request.query.get('remote') %} checked {% endif %}>
+										<label for="remote" class="ml-2 block text-sm text-gray-600">Remote Only</label>
+									</div>
+
+									<!-- Submit Button -->
+									<div>
+										<button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-full font-medium transition">
+											Apply Filters
+										</button>
+									</div>
+
+									<!-- Reset Filters -->
+									<div class="text-center">
+										<a href="{{ path('app_job_index') }}" class="text-sm text-teal-600 hover:text-teal-800">
+											Reset all filters
+										</a>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<!-- Right column (job listings) -->
+						<div class="lg:col-span-3">
+							<div class="mb-6">
+								<h2 class="text-2xl font-semibold text-slate-700">{{ jobs|length }}
+									Jobs Found</h2>
+								{% if app.request.query.all|length > 0 %}
+									<p class="text-gray-500">Filtered results</p>
+								{% endif %}
+							</div>
+
+							<div class="space-y-6">
+								{% if jobs is empty %}
+									<div class="bg-white rounded-lg shadow-md p-8 text-center">
+										<p class="text-gray-500 mb-4">No jobs match your search criteria.</p>
+										<a href="{{ path('app_job_index') }}" class="text-teal-600 hover:text-teal-800 font-medium">
+											View all jobs
+										</a>
+									</div>
+								{% else %}
+									{% for job in jobs %}
+										<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition">
+											<div class="p-6">
+												<div class="flex flex-wrap items-center justify-between mb-4">
+													<span class="{{ job.jobType.name == 'Full-time' ? 'bg-teal-100 text-teal-800' : (job.jobType.name == 'Remote' ? 'bg-blue-100 text-blue-800' : (job.jobType.name == 'Contract' ? 'bg-purple-100 text-purple-800' : (job.jobType.name == 'Part-time' ? 'bg-amber-100 text-amber-800' : (job.jobType.name == 'Internship' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800')))) }} text-xs font-medium px-3 py-1 rounded-full">
+														{{ job.jobType.name }}
+													</span>
+													<div class="flex items-center">
+														<span class="text-gray-500 text-sm mr-2">{{ job.city }},
+															{{ job.country }}</span>
+														{% if job.remoteAllowed %}
+															<span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Remote</span>
+														{% endif %}
+													</div>
+												</div>
+
+												<h3 class="text-xl font-bold text-slate-700 mb-2">{{ job.title }}</h3>
+
+												<div class="flex items-center mb-4">
+													<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+														<span class="text-gray-500 font-bold">{{ job.company.name|slice(0, 2)|upper }}</span>
+													</div>
+													<span class="text-gray-600">{{ job.company.name }}</span>
+													<span class="text-gray-400 mx-2">•</span>
+													<span class="text-gray-500">{{ job.salaryRange }}</span>
+												</div>
+
+												<p class="text-gray-600 mb-5">{{ job.description|striptags|slice(0, 150) ~ '...' }}</p>
+
+												<div class="flex items-center justify-between">
+													<div class="flex flex-wrap gap-2">
+														{% for category in job.categories %}
+															<span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">{{ category.name }}</span>
+														{% endfor %}
+													</div>
+													<a href="{{ path('app_job_show', {'id': job.id}) }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
+														View details
+														<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
+															<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+														</svg>
+													</a>
+												</div>
+											</div>
+										</div>
+									{% endfor %}
+
+									<!-- Pagination -->
+									{% if pagination.pageCount > 1 %}
+										<div class="mt-8 flex justify-center">
+											<nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+												{% if pagination.currentPage > 1 %}
+													<a href="{{ path('app_job_index', pagination.routeParams|merge({page: pagination.currentPage - 1})) }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+														<span class="sr-only">Previous</span>
+														<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+															<path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+														</svg>
+													</a>
+												{% endif %}
+
+												{% for page in 1..pagination.pageCount %}
+													<a href="{{ path('app_job_index', pagination.routeParams|merge({page: page})) }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium
+																														                                                   {{ page == pagination.currentPage ? 'bg-teal-50 text-teal-600 z-10' : 'text-gray-500 hover:bg-gray-50' }}">
+														{{ page }}
+													</a>
+												{% endfor %}
+
+												{% if pagination.currentPage < pagination.pageCount %}
+													<a href="{{ path('app_job_index', pagination.routeParams|merge({page: pagination.currentPage + 1})) }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+														<span class="sr-only">Next</span>
+														<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+															<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 01-1.414-1.414L9.586 10 6.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4z" clip-rule="evenodd"/>
+														</svg>
+													</a>
+												{% endif %}
+											</nav>
+										</div>
+									{% endif %}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 {% endblock %}

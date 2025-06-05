@@ -1,46 +1,172 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Job{% endblock %}
+{% block title %}
+	{{ job.title }}
+	- Jobiz
+{% endblock %}
 
 {% block body %}
-    <h1>Job</h1>
+	<div
+		class="font-[system-ui]">
+		<!-- Header Banner -->
+		<section class="relative h-64 bg-slate-700">
+			<div class="absolute inset-0 overflow-hidden">
+				<div class="w-full h-full bg-slate-800 bg-opacity-70"></div>
+			</div>
+			<div class="relative container mx-auto px-4 h-full flex flex-col justify-center">
+				<div class="max-w-6xl mx-auto w-full">
+					<div class="flex items-center mb-4">
+						<span class="{{ job.jobType.name == 'Full-time' ? 'bg-teal-100 text-teal-800' : (job.jobType.name == 'Remote' ? 'bg-blue-100 text-blue-800' : (job.jobType.name == 'Contract' ? 'bg-purple-100 text-purple-800' : (job.jobType.name == 'Part-time' ? 'bg-amber-100 text-amber-800' : (job.jobType.name == 'Internship' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800')))) }} px-4 py-1 rounded-full text-sm font-medium">
+							{{ job.jobType.name }}
+						</span>
+						{% if job.remoteAllowed %}
+							<span class="bg-green-100 text-green-800 px-4 py-1 rounded-full text-sm font-medium ml-2">
+								Remote Available
+							</span>
+						{% endif %}
+					</div>
+					<h1 class="text-3xl md:text-4xl font-bold text-white mb-2">{{ job.title }}</h1>
+					<div class="flex flex-wrap items-center text-white">
+						<div class="flex items-center mr-4 mb-2">
+							<div class="w-8 h-8 bg-white rounded-full flex items-center justify-center mr-2">
+								<span class="text-gray-700 font-bold text-sm">{{ job.company.name|slice(0, 2)|upper }}</span>
+							</div>
+							<span>{{ job.company.name }}</span>
+						</div>
+						<div class="flex items-center mb-2 mr-4">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+							</svg>
+							<span>{{ job.city }},
+								{{ job.country }}</span>
+						</div>
+						<div class="flex items-center mb-2">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+							</svg>
+							<span>{{ job.salaryRange }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ job.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ job.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ job.description }}</td>
-            </tr>
-            <tr>
-                <th>Country</th>
-                <td>{{ job.country }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ job.city }}</td>
-            </tr>
-            <tr>
-                <th>RemoteAllowed</th>
-                <td>{{ job.remoteAllowed ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>SalaryRange</th>
-                <td>{{ job.salaryRange }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<!-- Job content -->
+		<section class="py-12">
+			<div class="container mx-auto px-4">
+				<div class="max-w-6xl mx-auto">
+					<div
+						class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+						<!-- Left column (job details) -->
+						<div
+							class="lg:col-span-2">
+							<!-- Job description -->
+							<div class="bg-white rounded-lg shadow-md p-8 mb-8">
+								<h2 class="text-2xl font-semibold text-slate-700 mb-4">Description</h2>
+								<div class="prose max-w-none text-gray-600">
+									{{ job.description|raw }}
+								</div>
+							</div>
 
-    <a href="{{ path('app_job_index') }}">back to list</a>
+							<!-- Job Categories -->
+							{% if job.categories|length > 0 %}
+								<div class="bg-white rounded-lg shadow-md p-8 mb-8">
+									<h2 class="text-2xl font-semibold text-slate-700 mb-4">Categories</h2>
+									<div class="flex flex-wrap gap-2">
+										{% for category in job.categories %}
+											<span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm">
+												{{ category.name }}
+											</span>
+										{% endfor %}
+									</div>
+								</div>
+							{% endif %}
+						</div>
 
-    <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a>
+						<!-- Right column (company info and application) -->
+						<div
+							class="lg:col-span-1">
+							<!-- Company info -->
+							<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+								<h3 class="text-xl font-semibold text-slate-700 mb-4">About
+									{{ job.company.name }}</h3>
+								<div class="flex items-center mb-4">
+									<div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mr-3">
+										<span class="text-gray-500 font-bold">{{ job.company.name|slice(0, 2)|upper }}</span>
+									</div>
+									<div>
+										<h4 class="font-medium text-slate-700">{{ job.company.name }}</h4>
+										<p class="text-sm text-gray-500">{{ job.company.city }},
+											{{ job.company.country }}</p>
+									</div>
+								</div>
+								<div class="text-gray-600 text-sm mb-4">
+									{{ job.company.description|striptags|slice(0, 200) ~ '...' }}
+								</div>
+							</div>
 
-    {{ include('job/_delete_form.html.twig') }}
+							<!-- Application form -->
+							<div class="bg-white rounded-lg shadow-md p-6">
+								<h3 class="text-xl font-semibold text-slate-700 mb-4">Apply for this position</h3>
+
+								{% if is_granted('ROLE_USER') %}
+									<form action="{{ path('app_job_aplication_new') }}" method="post" class="space-y-4">
+										<input type="hidden" name="job_id" value="{{ job.id }}">
+
+										<div>
+											<label for="cover_letter" class="block text-sm font-medium text-slate-700 mb-1">Cover Letter</label>
+											<textarea id="cover_letter" name="cover_letter" rows="6" class="w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" required></textarea>
+										</div>
+
+										<div>
+											<button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-full font-medium transition">
+												Submit Application
+											</button>
+										</div>
+									</form>
+								{% else %}
+									<div class="bg-gray-50 rounded p-4 text-center">
+										<p class="text-gray-600 mb-4">You need to be logged in to apply for this position.</p>
+										<a href="{{ path('app_login') }}" class="inline-block bg-teal-600 hover:bg-teal-700 text-white py-2 px-6 rounded-full font-medium transition">
+											Sign In to Apply
+										</a>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Related Jobs -->
+		<section class="py-12 bg-gray-50">
+			<div class="container mx-auto px-4">
+				<div class="max-w-6xl mx-auto">
+					<h2 class="text-2xl font-semibold text-slate-700 mb-8">Similar Jobs</h2>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						{% for relatedJob in relatedJobs|default([]) %}
+							{{ component('JobCard', {
+                            title: relatedJob.title,
+                            company: relatedJob.company.name,
+                            companyInitials: relatedJob.company.name|slice(0, 2)|upper,
+                            location: relatedJob.city ~ ', ' ~ relatedJob.country,
+                            description: relatedJob.description|striptags|slice(0, 120) ~ '...',
+                            jobType: relatedJob.jobType.name,
+                            job_id: relatedJob.id,
+                            jobTypeClass: relatedJob.jobType.name == 'Full-time' ? 'bg-teal-100 text-teal-800' : 
+                                        (relatedJob.jobType.name == 'Remote' ? 'bg-blue-100 text-blue-800' : 
+                                        (relatedJob.jobType.name == 'Contract' ? 'bg-purple-100 text-purple-800' : 
+                                        (relatedJob.jobType.name == 'Part-time' ? 'bg-amber-100 text-amber-800' : 
+                                        (relatedJob.jobType.name == 'Internship' ? 'bg-green-100 text-green-800' : 
+                                        'bg-gray-100 text-gray-800'))))
+                        }) }}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 {% endblock %}

@@ -2,7 +2,12 @@
 	<div class="p-6">
 		<div class="flex items-center justify-between mb-4">
 			<span class="{{ jobTypeClass }} text-xs font-medium px-3 py-1 rounded-full">{{ jobType }}</span>
-			<span class="text-gray-500 text-sm">{{ location }}</span>
+			<div class="flex items-center">
+				<span class="text-gray-500 text-sm">{{ location }}</span>
+				{% if remoteAllowed|default(false) %}
+					<span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full ml-2">Remote</span>
+				{% endif %}
+			</div>
 		</div>
 		<h3 class="text-xl font-bold text-slate-700 mb-2">{{ title }}</h3>
 		<div class="flex items-center mb-4">
@@ -12,7 +17,7 @@
 			<span class="text-gray-600">{{ company }}</span>
 		</div>
 		<p class="text-gray-600 mb-5">{{ description }}</p>
-		<a href="{{ path('app_home') }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
+		<a href="{{ path('app_job_show', {'id': job_id}) }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
 			View details
 			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
 				<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
