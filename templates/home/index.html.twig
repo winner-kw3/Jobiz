@@ -4,128 +4,85 @@
 {% endblock %}
 
 {% block body %}
-	<div
-		class="font-[system-ui]">
-		<!-- Hero Section -->
-		<section class="bg-slate-700 text-white py-16">
-			<div class="container mx-auto px-4 md:px-8 max-w-6xl">
-				<div class="flex flex-col md:flex-row items-center justify-between">
-					<div class="md:w-1/2 mb-8 md:mb-0">
-						<h1 class="text-4xl md:text-5xl font-bold mb-4">Find Your Dream Tech Job</h1>
-						<p class="text-xl mb-8">Connecting top IT talent with innovative companies</p>
-						<div class="flex flex-wrap gap-4">
-							<a href="{{ path('app_home') }}" class="bg-teal-600 hover:bg-teal-700 text-white py-2 px-6 rounded-full font-medium transition">Browse Jobs</a>
-							<a href="{{ path('app_home') }}" class="bg-transparent hover:bg-white hover:text-slate-700 text-white py-2 px-6 rounded-full font-medium border border-white transition">About Us</a>
-						</div>
+<div
+	class="font-[system-ui]">
+	<!-- Hero Section -->
+	<section class="bg-slate-700 text-white py-16">
+		<div class="container mx-auto px-4 md:px-8 max-w-6xl">
+			<div class="flex flex-col md:flex-row items-center justify-between">
+				<div class="md:w-1/2 mb-8 md:mb-0">
+					<h1 class="text-4xl md:text-5xl font-bold mb-4">Find Your Dream Tech Job</h1>
+					<p class="text-xl mb-8">Connecting top IT talent with innovative companies</p>
+					<div class="flex flex-wrap gap-4">
+						<a href="{{ path('app_home') }}" class="bg-teal-600 hover:bg-teal-700 text-white py-2 px-6 rounded-full font-medium transition">Browse Jobs</a>
+						<a href="{{ path('app_about') }}" class="bg-transparent hover:bg-white hover:text-slate-700 text-white py-2 px-6 rounded-full font-medium border border-white transition">About Us</a>
 					</div>
-					<div class="md:w-1/2">
-						<div class="bg-white p-4 rounded-lg shadow-lg">
-							<img src="{{ asset('assets/img/logo-jobiz.png') }}" alt="Jobiz" class="max-w-full h-auto">
-						</div>
+				</div>
+				<div class="md:w-1/2">
+					<div class="bg-white p-4 rounded-lg shadow-lg">
+						<img src="{{ asset('assets/img/logo-jobiz.png') }}" alt="Jobiz" class="max-w-full h-auto">
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 
-		<!-- Introduction Section -->
-		<section class="py-12 bg-gray-50">
-			<div class="container mx-auto px-4 md:px-8 max-w-6xl text-center">
-				<h2 class="text-3xl font-bold mb-6 text-slate-700">Welcome to Jobiz</h2>
-				<p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-					Jobiz is a specialized job platform connecting IT professionals with top tech companies. 
-										                Whether you're looking for development, data science, networking, or system administration positions,
-										                we've got opportunities that match your skills and career goals.
-				</p>
-				<div class="w-24 h-1 bg-teal-600 mx-auto"></div>
+	<!-- Introduction Section -->
+	<section class="py-12 bg-gray-50">
+		<div class="container mx-auto px-4 md:px-8 max-w-6xl text-center">
+			<h2 class="text-3xl font-bold mb-6 text-slate-700">Welcome to Jobiz</h2>
+			<p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+				Jobiz is a specialized job platform connecting IT professionals with top tech companies. 
+																		                Whether you're looking for development, data science, networking, or system administration positions,
+																		                we've got opportunities that match your skills and career goals.
+			</p>
+			<div class="w-24 h-1 bg-teal-600 mx-auto"></div>
+		</div>
+	</section>
+
+	<!-- Featured Jobs Section -->
+	<section class="py-16">
+		<div class="container mx-auto px-4 md:px-8 max-w-6xl">
+			<div class="flex justify-between items-center mb-10">
+				<h2 class="text-3xl font-bold text-slate-700">Latest Job Offers</h2>
+				<a href="{{ path('app_home') }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
+					View all jobs
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+					</svg>
+				</a>
 			</div>
-		</section>
 
-		<!-- Featured Jobs Section -->
-		<section class="py-16">
-			<div class="container mx-auto px-4 md:px-8 max-w-6xl">
-				<div class="flex justify-between items-center mb-10">
-					<h2 class="text-3xl font-bold text-slate-700">Latest Job Offers</h2>
-					<a href="{{ path('app_home') }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
-						View all jobs
-						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
-							<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-						</svg>
-					</a>
-				</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{{ component('JobCard', {
+						title: 'Senior Frontend Developer',
+						company: 'TechCorp',
+						companyInitials: 'TC',
+						location: 'Paris, France',
+						description: 'Join our team to build user-friendly interfaces with modern frameworks...',
+						jobType: 'Full-time',
+						jobTypeClass: 'bg-teal-100 text-teal-800'
+					}) }}
 
-				<div
-					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					<!-- Job Card 1 -->
-					<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition">
-						<div class="p-6">
-							<div class="flex items-center justify-between mb-4">
-								<span class="bg-teal-100 text-teal-800 text-xs font-medium px-3 py-1 rounded-full">Full-time</span>
-								<span class="text-gray-500 text-sm">Paris, France</span>
-							</div>
-							<h3 class="text-xl font-bold text-slate-700 mb-2">Senior Frontend Developer</h3>
-							<div class="flex items-center mb-4">
-								<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-									<span class="text-gray-500 font-bold">TC</span>
-								</div>
-								<span class="text-gray-600">TechCorp</span>
-							</div>
-							<p class="text-gray-600 mb-5">Join our team to build user-friendly interfaces with modern frameworks...</p>
-							<a href="{{ path('app_home') }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
-								View details
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-								</svg>
-							</a>
-						</div>
-					</div>
-
-					<!-- Job Card 2 -->
-					<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition">
-						<div class="p-6">
-							<div class="flex items-center justify-between mb-4">
-								<span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">Remote</span>
-								<span class="text-gray-500 text-sm">Anywhere</span>
-							</div>
-							<h3 class="text-xl font-bold text-slate-700 mb-2">Data Scientist</h3>
-							<div class="flex items-center mb-4">
-								<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-									<span class="text-gray-500 font-bold">AI</span>
-								</div>
-								<span class="text-gray-600">AI Solutions</span>
-							</div>
-							<p class="text-gray-600 mb-5">We're looking for a data scientist to analyze large datasets and create ML models...</p>
-							<a href="{{ path('app_home') }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
-								View details
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-								</svg>
-							</a>
-						</div>
-					</div>
-
-					<!-- Job Card 3 -->
-					<div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition">
-						<div class="p-6">
-							<div class="flex items-center justify-between mb-4">
-								<span class="bg-purple-100 text-purple-800 text-xs font-medium px-3 py-1 rounded-full">Contract</span>
-								<span class="text-gray-500 text-sm">Berlin, Germany</span>
-							</div>
-							<h3 class="text-xl font-bold text-slate-700 mb-2">DevOps Engineer</h3>
-							<div class="flex items-center mb-4">
-								<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-									<span class="text-gray-500 font-bold">CS</span>
-								</div>
-								<span class="text-gray-600">Cloud Systems</span>
-							</div>
-							<p class="text-gray-600 mb-5">Help us automate and optimize our CI/CD pipeline and cloud infrastructure...</p>
-							<a href="{{ path('app_home') }}" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
-								View details
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewbox="0 0 20 20" fill="currentColor">
-									<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-								</svg>
-							</a>
-						</div>
-					</div>
+				{{ component('JobCard', {
+						title: 'Data Scientist',
+						company: 'AI Solutions',
+						companyInitials: 'AI',
+						location: 'Anywhere',
+						description: 'We\'re looking for a data scientist to analyze large datasets and create ML models...',
+						jobType: 'Remote',
+						jobTypeClass: 'bg-blue-100 text-blue-800'
+					}) }}
+					
+					{{ component('JobCard', {
+						title: 'DevOps Engineer',
+						company: 'Cloud Systems',
+						companyInitials: 'CS',
+						location: 'Berlin, Germany',
+						description: 'Help us automate and optimize our CI/CD pipeline and cloud infrastructure...',
+						jobType: 'Contract',
+						jobTypeClass: 'bg-purple-100 text-purple-800'
+					}) }}
 				</div>
 			</div>
 		</section>
