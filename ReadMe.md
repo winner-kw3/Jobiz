@@ -1,6 +1,6 @@
 # Jobiz - Plateforme d'Emploi Tech
 
-![Jobiz Logo](public/assets/jobiz/image.png)
+![Jobiz Logo](![image](https://github.com/user-attachments/assets/7e09a85b-ad69-4d57-bd62-e3049654836b))
 
 ## À propos du projet
 
@@ -25,11 +25,12 @@ Jobiz est une plateforme dédiée à la mise en relation des professionnels de l
 
 ### Page d'accueil
 
-![Page d'accueil](public/assets/jobiz/image1.png)
+![Page d'accueil](![image1](https://github.com/user-attachments/assets/31f12e3b-5cea-4e69-94ec-57da54216df6))
 
 ### Liste des offres
 
-![Liste des offres](public/assets/jobiz/image2.png)
+![Liste des offres](![image3](https://github.com/user-attachments/assets/6f8c5f2b-a3b7-467a-a02a-9576913a7694))
+
 
 ### Détail d'une offre
 
