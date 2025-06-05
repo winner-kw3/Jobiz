@@ -110,4 +110,4 @@ Ce projet a été développé dans le cadre d'une évaluation à Keyce, avec le 
 
 ---
 
-© 2023 Jobiz - Codé par Winner & Samuel
+© 2025 Jobiz - Codé par Winner & Samuel ( WID )
