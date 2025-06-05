@@ -1,38 +1,86 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Login - Jobiz
+{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+	<div
+		class="font-[system-ui]">
+		<!-- Banner Section -->
+		<section class="relative h-48 bg-slate-700">
+			<div class="absolute inset-0 overflow-hidden">
+				<div class="w-full h-full bg-slate-800 bg-opacity-70"></div>
+			</div>
+			<div class="relative container mx-auto px-4 h-full flex items-center justify-center">
+				<h1 class="text-3xl md:text-4xl font-bold text-white text-center">Login to Your Account</h1>
+			</div>
+		</section>
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
+		<!-- Login Form Section -->
+		<section class="py-16 bg-gray-50">
+			<div class="container mx-auto px-4">
+				<div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
+					{% if error %}
+						<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6" role="alert">
+							<p class="font-medium">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+						</div>
+					{% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Username</label>
-        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+					{% if app.user %}
+						<div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-6">
+							<p>You are logged in as
+								{{ app.user.userIdentifier }}.
+								<a href="{{ path('app_logout') }}" class="font-medium underline">Logout</a>
+							</p>
+						</div>
+					{% endif %}
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+					<form method="post" class="space-y-6">
+						<div>
+							<label for="username" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+							<input type="email" value="{{ last_username }}" name="_username" id="username" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" autocomplete="email" required autofocus>
+						</div>
 
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-            </div>
-        #}
+						<div>
+							<label for="password" class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+							<input type="password" name="_password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" autocomplete="current-password" required>
+						</div>
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+						<div class="flex items-center">
+							<input type="checkbox" name="_remember_me" id="_remember_me" class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
+							<label for="_remember_me" class="ml-2 block text-sm text-gray-600">Remember me</label>
+						</div>
+
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+						<div>
+							<button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+								Sign in
+							</button>
+						</div>
+					</form>
+
+					<div class="mt-6 text-center">
+						<p class="text-sm text-gray-600">
+							Don't have an account?
+							<a href="#" class="font-medium text-teal-600 hover:text-teal-500">
+								Sign up
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA Section -->
+		<section class="bg-teal-600 py-12 text-white">
+			<div class="container mx-auto px-4 md:px-8 max-w-6xl text-center">
+				<h2 class="text-3xl font-bold mb-6">Find Your Dream Tech Job Today</h2>
+				<p class="text-xl mb-8 max-w-2xl mx-auto">Join Jobiz and connect with leading tech companies looking for your expertise.</p>
+				<a href="{{ path('app_home') }}" class="bg-white text-teal-600 hover:bg-gray-100 py-3 px-8 rounded-full font-medium inline-block transition">
+					Explore Jobs
+				</a>
+			</div>
+		</section>
+	</div>
 {% endblock %}
