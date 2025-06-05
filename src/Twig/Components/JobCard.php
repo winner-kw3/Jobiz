@@ -14,4 +14,6 @@ final class JobCard
     public string $description;
     public string $jobType;
     public string $jobTypeClass = 'bg-teal-100 text-teal-800';
+    public ?int $job_id = null;
+    public bool $remoteAllowed = false;
 }
